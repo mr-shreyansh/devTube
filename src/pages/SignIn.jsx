@@ -6,6 +6,8 @@ import { loginFailure, loginStart, loginSuccess, tokenSuccess } from '../redux/u
 import {auth, provider} from '../firebase';
 import {signInWithPopup} from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
+import env from 'react-dotenv';
+env.config();
 
 const Container = styled.div`
  display: flex;
@@ -55,6 +57,7 @@ const Button = styled.button`
 
 
 const SignIn = () => {
+  const url = env.BASE_URL;
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -64,7 +67,7 @@ const handleSignin = async (e) => {
   e.preventDefault();
   dispatch(loginStart());
   try{
-    const res = await axios.post('http://localhost:4000/auth/signin', {username, password}, {withCredentials: true})
+    const res = await axios.post(`${url}/auth/signin`, {username, password}, {withCredentials: true})
     dispatch(loginSuccess(res.data.user));  
     dispatch(tokenSuccess(res.data.token));
     navigate('/');
@@ -78,7 +81,7 @@ const signInWithGoogle = async () => {
   try{
      signInWithPopup(auth, provider).
      then((result)=> {
-      axios.post("http://localhost:4000/auth/google", {
+        axios.post(`${url}/auth/google`, {
         username: result.user.displayName,
         img: result.user.photoURL,
         email: result.user.email,

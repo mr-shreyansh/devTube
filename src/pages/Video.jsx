@@ -11,6 +11,8 @@ import { format } from 'timeago.js';
 import { subscription } from '../redux/userSlice';
 import ReactPlayer from 'react-player/lazy';
 import Recomedation from '../components/Recomedation';
+import env from 'react-dotenv';
+env.config();
 
 const Container = styled.div`
  display: flex;
@@ -135,6 +137,7 @@ const VideoFrame = styled.video`
 
 
 const Video = () => {
+  const url = env.BASE_URL;
   const { currentUser } = useSelector(state => state.user)
   const { currentVideo } = useSelector(state => state.video)
   const dispatch = useDispatch()
@@ -147,9 +150,9 @@ const Video = () => {
     const fetchData = async () => {
       dispatch(fetchStart());
       try {
-        const videoRes = await axios.get(`http://localhost:4000/videos/find/${path}`);
+        const videoRes = await axios.get(`${url}/videos/find/${path}`);
         const id = videoRes.data.userId;
-        const channelRes = await axios.get(`http://localhost:4000/users/find/${id}`);
+        const channelRes = await axios.get(`${url}/users/find/${id}`);
         setChannel(channelRes.data.user);
         dispatch(fetchSuccess(videoRes.data));
 
@@ -164,7 +167,7 @@ const Video = () => {
   const handleLike = async () => {
     try {
       
-      await axios.put(`http://localhost:4000/users/like/${currentVideo?._id}`, {},
+      await axios.put(`${url}/users/like/${currentVideo?._id}`, {},
       {
         withCredentials: true,
         headers: {
@@ -181,7 +184,7 @@ const Video = () => {
   };
 
   const handleDislike = async () => {
-    await axios.put(`http://localhost:4000/users/dislike/${currentVideo?._id}`, {},
+    await axios.put(`${url}/users/dislike/${currentVideo?._id}`, {},
     {
       withCredentials: true,
       headers: {
@@ -196,7 +199,7 @@ const Video = () => {
      console.log(channel._id)
     try {
        currentUser.subscribedUsers.includes(channel?._id) ?
-      await axios.put(`http://localhost:4000/users/unsub/${channel?._id}`, {},
+      await axios.put(`${url}/users/unsub/${channel?._id}`, {},
       {
         withCredentials: true,
         headers: {
@@ -204,7 +207,7 @@ const Video = () => {
         },
       })
       :
-      await axios.put(`http://localhost:4000/users/sub/${channel?._id}`, {},
+      await axios.put(`${url}/users/sub/${channel?._id}`, {},
       {
         withCredentials: true,
         headers: {
