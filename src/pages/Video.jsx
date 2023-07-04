@@ -11,8 +11,7 @@ import { format } from 'timeago.js';
 import { subscription } from '../redux/userSlice';
 import ReactPlayer from 'react-player/lazy';
 import Recomedation from '../components/Recomedation';
-import env from 'react-dotenv';
-env.config();
+
 
 const Container = styled.div`
  display: flex;
@@ -137,7 +136,6 @@ const VideoFrame = styled.video`
 
 
 const Video = () => {
-  const url = env.BASE_URL;
   const { currentUser } = useSelector(state => state.user)
   const { currentVideo } = useSelector(state => state.video)
   const dispatch = useDispatch()

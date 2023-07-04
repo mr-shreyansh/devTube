@@ -6,8 +6,6 @@ import { loginFailure, loginStart, loginSuccess, tokenSuccess } from '../redux/u
 import {auth, provider} from '../firebase';
 import {signInWithPopup} from 'firebase/auth'
 import { useNavigate } from 'react-router-dom'
-import env from 'react-dotenv';
-env.config();
 
 const Container = styled.div`
  display: flex;
@@ -57,7 +55,6 @@ const Button = styled.button`
 
 
 const SignIn = () => {
-  const url = env.BASE_URL;
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
