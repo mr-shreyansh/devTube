@@ -205,7 +205,7 @@ const Video = () => {
         },
       })
       :
-      await axios.put(`${url}/users/sub/${channel?._id}`, {},
+      await axios.put(`https://devtube.onrender.com/users/sub/${channel?._id}`, {},
       {
         withCredentials: true,
         headers: {
