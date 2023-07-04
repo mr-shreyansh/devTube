@@ -19,7 +19,7 @@ const Home = ({type}) => {
    useEffect(() => {
      const fetchVideos = async () => {
       try{
-        const res =await axios.get(`${url}/videos/${type}`);
+        const res =await axios.get(`https://devtube.onrender.com/videos/${type}`);
         console.log(res.data);
         setVideos(res.data);
       }

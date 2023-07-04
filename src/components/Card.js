@@ -60,7 +60,7 @@ const Card = ({x,type}) => {
     const fetchChannel = async () => {
       console.log(x);
       if(x){
-        const res = await axios.get(`http://localhost:4000/users/find/${x?.userId}`);
+        const res = await axios.get(`https://devtube.onrender.com/users/find/${x?.userId}`);
         console.log(res);
         setChannel(res.data);
       }

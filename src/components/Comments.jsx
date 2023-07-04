@@ -49,7 +49,7 @@ const Comments = ({videoId}) => {
     const [addComment, setAddComment] = React.useState('');
     useEffect(() => {
         const getComments = async () => {
-            const res = await axios.get(`http://localhost:4000/comments/${videoId}`);
+            const res = await axios.get(`https://devtube.onrender.com/comments/${videoId}`);
             setComments(res.data);
             console.log(res.data);
         
@@ -59,7 +59,7 @@ const Comments = ({videoId}) => {
     }, [setComments, videoId])
 
  const handlePost = async () => {
-    const res = await axios.post(`http://localhost:4000/comments/`, {
+    const res = await axios.post(`https://devtube.onrender.com/comments/`, {
         userId: currentUser._id,
         videoId: videoId,
         desc: addComment,

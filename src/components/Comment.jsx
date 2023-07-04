@@ -60,7 +60,7 @@ const Comment = ({comment}) => {
 
   useEffect(()=>{
     const getChannel = async () => {
-      const res = await axios.get(`http://localhost:4000/users/find/${comment.userId}`);
+      const res = await axios.get(`https://devtube.onrender.com/users/find/${comment.userId}`);
       setChannel(res.data)
     }
     getChannel()

@@ -12,7 +12,7 @@ const Recomedation = ({tags}) => {
    `
  useEffect(()=>{
     const getVideos = async () => {
-        const res = await axios.get(`http://localhost:4000/videos/tags?tags=${tags}`)
+        const res = await axios.get(`https://devtube.onrender.com/videos/tags?tags=${tags}`)
         setVideos(res.data)
     }
     getVideos()

@@ -148,7 +148,7 @@ const Upload = ({setOpen}) => {
     const handleUpload =async (e) => {
         e.preventDefault();
         console.log(inputs)
-        const res = await axios.post('http://localhost:4000/videos', 
+        const res = await axios.post('https://devtube.onrender.com/videos', 
         {
             ...inputs, tags
         },

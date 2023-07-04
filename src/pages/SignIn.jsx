@@ -67,7 +67,7 @@ const handleSignin = async (e) => {
   e.preventDefault();
   dispatch(loginStart());
   try{
-    const res = await axios.post(`${url}/auth/signin`, {username, password}, {withCredentials: true})
+    const res = await axios.post(`https://devtube.onrender.com/auth/signin`, {username, password}, {withCredentials: true})
     dispatch(loginSuccess(res.data.user));  
     dispatch(tokenSuccess(res.data.token));
     navigate('/');
@@ -81,7 +81,7 @@ const signInWithGoogle = async () => {
   try{
      signInWithPopup(auth, provider).
      then((result)=> {
-        axios.post(`${url}/auth/google`, {
+        axios.post(`https://devtube.onrender.com/auth/google`, {
         username: result.user.displayName,
         img: result.user.photoURL,
         email: result.user.email,

@@ -150,9 +150,9 @@ const Video = () => {
     const fetchData = async () => {
       dispatch(fetchStart());
       try {
-        const videoRes = await axios.get(`${url}/videos/find/${path}`);
+        const videoRes = await axios.get(`https://devtube.onrender.com/videos/find/${path}`);
         const id = videoRes.data.userId;
-        const channelRes = await axios.get(`${url}/users/find/${id}`);
+        const channelRes = await axios.get(`https://devtube.onrender.com/users/find/${id}`);
         setChannel(channelRes.data.user);
         dispatch(fetchSuccess(videoRes.data));
 
@@ -167,7 +167,7 @@ const Video = () => {
   const handleLike = async () => {
     try {
       
-      await axios.put(`${url}/users/like/${currentVideo?._id}`, {},
+      await axios.put(`https://devtube.onrender.com/users/like/${currentVideo?._id}`, {},
       {
         withCredentials: true,
         headers: {
@@ -184,7 +184,7 @@ const Video = () => {
   };
 
   const handleDislike = async () => {
-    await axios.put(`${url}/users/dislike/${currentVideo?._id}`, {},
+    await axios.put(`https://devtube.onrender.com/users/dislike/${currentVideo?._id}`, {},
     {
       withCredentials: true,
       headers: {
@@ -199,7 +199,7 @@ const Video = () => {
      console.log(channel._id)
     try {
        currentUser.subscribedUsers.includes(channel?._id) ?
-      await axios.put(`${url}/users/unsub/${channel?._id}`, {},
+      await axios.put(`https://devtube.onrender.com/users/unsub/${channel?._id}`, {},
       {
         withCredentials: true,
         headers: {
