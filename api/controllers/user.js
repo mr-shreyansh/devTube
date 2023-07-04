@@ -1,0 +1,103 @@
+import {createError} from '../error.js';
+import User from '../models/User.js';
+import Video from '../models/Video.js';
+
+export const updateUser = async (req, res, next) => {
+    try{
+      if(req.params.id !== req.user.id) return next(createError(403, "You can only update your account"));
+      if(req.body.password) return next(createError(403, "Use /change-password to update your password"));
+      const user = await User.findByIdAndUpdate(req.params.id, {$set: req.body}, {new: true});
+
+        res.status(200).json({user});
+  }
+    catch (error) {
+    next (error);
+    }
+};
+
+export const deleteUser = async (req, res, next) => {
+  if(req.params.id !== req.user.id)
+    return next(createError(403, "You can only delete your account"));
+
+  try{
+     await User.findByIdAndDelete(req.params.id);
+      res.status(200).json({message: "User deleted"});
+
+  } catch (error) {
+    next (error);
+  }
+};
+
+export const getUser = async (req, res, next) => {
+ try{
+     const user = await User.findById(req.params.id);
+      res.status(200).json({user});
+ } catch (error) {
+    next(error);
+  }
+
+};
+
+export const subscribe = async (req, res, next) => {
+ try{
+   await User.findByIdAndUpdate(req.user.id,{
+     $push: {subscribedUsers: req.params.id}
+    })
+    console.log(req.params.id)
+    
+    await User.findByIdAndUpdate(req.params.id, {
+      $inc: {subscribers: 1}
+    });
+      res.status(200).json({message: "User subscribed" });
+ } catch (error) {
+    next (error);
+  }
+
+};
+
+export const unsubscribe = async (req, res, next) => {
+  try{
+     await User.findByIdAndUpdate(req.user.id,{
+        $pull: {subscribedUsers: req.params.id}
+      })
+      await User.findByIdAndUpdate(req.params.id, {
+        $inc: {subscribers: -1}
+      });
+      res.status(200).json({message: "User unsubscribed"});
+} catch (error) {
+   next (error);
+ }
+
+};
+
+export const like = async (req, res, next) => {
+ try{
+   const id = req.user.id;
+   const videoId = req.params.videoId;
+   if(!videoId) return next(createError(400, "Video id is required"));
+   await Video.findByIdAndUpdate(videoId, {
+     $addToSet: {likes: id},
+      $pull: {dislikes: id}
+    });
+    res.status(200).json({message: "User liked the video"+ videoId});
+ } catch (error) {
+   console.log(error)
+    next (error);
+  }
+
+};
+
+export const dislike = async (req, res, next) => {
+  try{
+     const id = req.user.id;
+      const videoId = req.params.videoId;
+      await Video.findByIdAndUpdate(videoId, {
+        $addToSet: {dislikes: id},
+        $pull: {likes: id}
+      });
+      res.status(200).json({message: "User disliked"});
+
+  } catch (error) {
+     next (error);
+   }
+};
