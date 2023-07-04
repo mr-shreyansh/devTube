@@ -14,7 +14,7 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:3000', // Replace with the appropriate origin(s)
+    origin: ['http://localhost:3000','https://mr-shreyansh.github.io/devTube','https://mr-shreyansh.github.io'], // Replace with the appropriate origin(s)
     credentials: true,
     // methods: ['GET', 'POST', 'PUT', 'DELETE'],
     // allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept']
